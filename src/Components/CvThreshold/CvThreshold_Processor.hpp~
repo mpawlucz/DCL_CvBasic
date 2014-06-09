@@ -54,7 +54,6 @@
  * - THRESH_TRUNC
  * - THRESH_TOZERO
  * - THRESH_TOZERO_INV
- *
  * \prop{type2,string,"binary"}
  * Thresholding second type:
  * - NULL
