@@ -21,6 +21,14 @@ CvResize::CvResize(const std::string & name) :
 	outputWidth("outputWidth", 500),
 	outputHeight("outputHeight", 500)
 {
+	outputWidth.setToolTip("Width");
+	outputWidth.addConstraint("1");
+	outputWidth.addConstraint("5000");
+
+	outputHeight.setToolTip("Width");
+	outputHeight.addConstraint("1");
+	outputHeight.addConstraint("5000");
+
 	registerProperty(outputWidth);
 	registerProperty(outputHeight);
 }

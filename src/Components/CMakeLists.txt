@@ -84,3 +84,7 @@ ADD_COMPONENT(CvStarDetector)
 ADD_COMPONENT(CvBruteForce)
 
 ADD_COMPONENT(Trigger)
+
+ADD_COMPONENT(Multiplication)
+
+ADD_COMPONENT(Division)

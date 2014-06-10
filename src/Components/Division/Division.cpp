@@ -1,7 +1,8 @@
 /*!
  * \file
  * \brief
- * \author budrys,,,
+ * \author mpawlucz
+ * \date 2014-06-10
  */
 
 #include <memory>
