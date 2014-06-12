@@ -26,13 +26,15 @@ ImageWriter::ImageWriter(const std::string & name) :
 		base_name("base_name", std::string("img")),
 		format("format", std::string("png")),
 		digits("digits", 2),
-		count("count", 1){
+		count("count", 1),
+		autosave("autosave", true){
 
 	registerProperty(directory);
 	registerProperty(base_name);
 	registerProperty(format);
 	registerProperty(digits);
 	registerProperty(count);
+	registerProperty(autosave);
 }
 
 ImageWriter::~ImageWriter() {
@@ -56,6 +58,10 @@ void ImageWriter::prepareInterface() {
 		registerStream( std::string("in_img_")+id, (Base::DataStreamInterface*)(in_img[i]));
 		addDependency(std::string("write_image_")+id, stream);
 	}
+
+	// Handler for onWriteOnce
+	h_onWriteOnce.setup(this, &ImageWriter::onWriteOnce);
+	registerHandler("onWriteOnce", &h_onWriteOnce);
 
 
 	// register aliases for first handler and streams
@@ -97,8 +103,23 @@ bool ImageWriter::onStart() {
 	return true;
 }
 
+void ImageWriter::onWriteOnce()
+{
+	LOG(LTRACE) << "ImageWriter::onWriteOnce\n";
+	try {
+		std::string bn = base_name;
+		std::string f = format;
+		std::string fname = std::string(directory) + "/" + bn + "." + f;
+		cv::imwrite(fname, in_img[0]->read());
+		CLOG(LNOTICE) << "Written once: " << fname;
+	} catch (...) {
+		LOG(LERROR) << "ImageWriter::onWriteOnce failed\n";
+	}
+}
+
 void ImageWriter::write_image_N(int n) {
 	CLOG(LTRACE) << name() << "::onNewImage(" << n << ")";
+	if (!autosave) return;
 
 	boost::posix_time::ptime tm = boost::posix_time::microsec_clock::local_time();
 

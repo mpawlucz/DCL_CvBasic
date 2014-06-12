@@ -72,17 +72,23 @@ protected:
 	/// Event handlers
 	std::vector< Base::EventHandler2* > handlers;
 
+	Base::EventHandler <ImageWriter> h_onWriteOnce;
+
 	Base::Property<string> directory;
 	Base::Property<string> base_name;
 	Base::Property<string> format;
 	Base::Property<int> digits;
 	Base::Property<int> count;
 	
+	/// Loading mode: triggered vs continous.
+	Base::Property<bool> autosave;
+
 	std::vector<std::string> base_names;
 	std::vector<std::string> formats;
 
 	// Handlers
 	void write_image_N(int n);
+	void onWriteOnce();
 
 	std::vector<int> counts;
 
